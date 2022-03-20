@@ -133,7 +133,7 @@
 
                         // Create element
                         let row = document.createElement("tr");
-                        let color = { up: "green", slow: "yellow", down: "red" }[service.guess[0]]};
+                        let color = { up: "green", slow: "yellow", down: "red" }[service.guess[0]];
                         $(row).html(`
                             <th scope = "row" style = "color: var(--ii-${color});">${service.name}</th>
                             <td>${Math.round(service.ping)}ms</td>
