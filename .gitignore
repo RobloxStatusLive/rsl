@@ -2,4 +2,4 @@
 __pycache__/
 
 # Hidden files
-db/data.json
+db/*

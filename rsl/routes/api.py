@@ -8,7 +8,7 @@ from flask import jsonify
 # Routes
 @app.route("/api/status")
 def route_api_status() -> None:
-    data = json.loads(open("db/data.json", "r").read())
+    data = json.loads(open("db/current.json", "r").read())
     slow = [s for n, s in data.items() if s["guess"][0] == "slow"]
     down = [s for n, s in data.items() if s["guess"][0] == "down"]
     return jsonify(

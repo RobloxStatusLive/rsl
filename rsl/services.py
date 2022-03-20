@@ -9,14 +9,14 @@ from threading import Thread
 # Tracker DB
 class TrackerDB(object):
     def __init__(self) -> None:
-        with open("db/data.json", "w+") as f:
+        with open("db/current.json", "w+") as f:
             f.write("{}")
 
         self.data = {}
 
     def write(self, data: dict) -> None:
         self.data[data["id"]] = data
-        with open("db/data.json", "w") as f:
+        with open("db/current.json", "w") as f:
             f.write(json.dumps(self.data, indent = 4))
 
 # Tracking class
