@@ -12,6 +12,12 @@ app = Flask(
     "Roblox Status Live",
     template_folder = rpath("src/templates")
 )
+app.version = "1.1"
+
+# Jinja env
+@app.context_processor
+def add_globals() -> dict:
+    return {"app": app}
 
 # Start service launcher
 if "RSLSTARTED" not in os.environ:

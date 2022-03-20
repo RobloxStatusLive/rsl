@@ -36,7 +36,7 @@ class ServiceTracker(object):
         if code != 200:
             return "down", "Non-200 status code"
 
-        threshold = service.get("threshold", 200)
+        threshold = service.get("threshold", 500)
         if ping > threshold:
             return "slow", f"Ping higher than {threshold}ms threshold"
 
@@ -52,7 +52,6 @@ class ServiceTracker(object):
         self.trackerdb.write(data)
 
     def track(self, service: dict) -> None:
-        print("Now tracking:", service["name"])
 
         # Initialization
         service_url = f"https://{service['id']}.roblox.com/{service.get('endpoint', '')}"
@@ -65,4 +64,4 @@ class ServiceTracker(object):
                 code, ping = 0, 0
 
             self.dump_tracker(service | {"url": service_url, "code": code, "ping": ping, "guess": list(self.guess_status(service, code, ping))})
-            sleep(10)
+            sleep(60)

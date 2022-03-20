@@ -35,7 +35,13 @@
                 color: var(--ii-fg);
                 background-color: var(--ii-bg1);
             }
-            nav { height: 3rem; background-color: var(--ii-bg2); }
+            nav {
+                top: 0px;
+                width: 100%;
+                height: 3rem;
+                position: fixed;
+                background-color: var(--ii-bg2);
+            }
             nav div {
                 top: 50%;
                 position: relative;
@@ -50,14 +56,17 @@
                 text-decoration: underline;
             }
             div#content {
-                margin-top: 35px;
-                text-align: center;
+                margin-top: 75px;
+            }
+            table {
+                margin: auto;
+                width: 800px !important;
             }
             footer {
                 left: 10px;
                 bottom: 10px;
                 color: #fefefe;
-                position: absolute;
+                position: fixed;
             }
         </style>
 
@@ -77,14 +86,64 @@
         </nav>
 
         <!-- Content -->
-        <div id = "content">
+        <div id = "content" align = "center">
             <h3>
                 Roblox is currently
-                <span style = "color: var(--ii-{{ status[1] }});">{{ status[0] }}</span>!
+                <span id = "status" style = "color: var(--ii-{{ status[1] }});">{{ status[0] }}</span>!
             </h3>
+            <table class = "table table-striped table-dark table-borderless">
+                <thead>
+                    <tr>
+                        <th scope = "col">Name</th>
+                        <th scope = "col">Ping</th>
+                        <th scope = "col">URL</th>
+                        <th scope = "col">Status</th>
+                    </tr>
+                </thead>
+                <tbody id = "service-list">
+                    {% for service in data %}
+                        <tr>
+                            {% set color = {"up": "green", "slow": "yellow", "down": "red"}[service["guess"][0]] %}
+                            <th scope = "row" style = "color: var(--ii-{{ color }});">{{ service["name"] }}</th>
+                            <td>{{ service["ping"]|round(2)|int }}ms</td>
+                            <td>{{ service["url"].removeprefix("https://").split("/")[0] }}</td>
+                            <td>{{ service["guess"][1] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <!-- Footer -->
-        <footer>Made with ❤️ by <a href = "https://iipython.cf">iiPython</a></footer>
+        <footer>RSL v{{ app.version }}<br>Made with ❤️ by <a href = "https://iipython.cf">iiPython</a> + <a href = "https://devforum.roblox.com/u/crcoli737">Crcoli737</a></footer>
+
+        <!-- JS -->
+        <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            setInterval(() => {
+                $.get("/api/status", {}, (d) => {
+
+                    // Load status information
+                    $("#status").text(d.status[0]);
+                    $("#status").css("color", `var(--ii-${d.status[1]})`);
+
+                    // Render our service data
+                    $("#service-list").html("");
+                    for (let service of d.services) {
+
+                        // Create element
+                        let row = document.createElement("tr");
+                        let color = { up: "green", slow: "yellow", down: "red" }[service.guess[0]]};
+                        $(row).html(`
+                            <th scope = "row" style = "color: var(--ii-${color});">${service.name}</th>
+                            <td>${Math.round(service.ping)}ms</td>
+                            <td>${service.url.slice(8).split("/")[0]}</td>
+                            <td>${service.guess[1]}</td>
+                        `);
+                        $("#service-list").append(row);
+                    }
+                })
+            }, 60000);  // 1m since our internal database doesn't update faster than that
+        </script>
     </body>
 </html>
