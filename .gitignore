@@ -1,0 +1,7 @@
+# Cache
+__pycache__/
+
+# Hidden files
+db/data.json
+config.json
+
