@@ -69,7 +69,7 @@ Now let's take a look at what kind of information the API contains.
 ### v1.1 Minor Update
 - Added more Roblox APIs to the API List.
 - Rewrote the Roblox Status Live API.
-- Rewrote the backend of Roblox Status live in preperation for Roblox Status Live v2.
+- Rewrote the backend of Roblox Status Live in preperation for Roblox Status Live v2.
 - We have a new logo in preperation for RSL v2.
 
 ### v1.0 Initial Release
