@@ -24,11 +24,6 @@ The Roblox Status Live API is an easy way for other developers to integrate the 
 
 #### The API Documentation has moved [here](http://robloxstatus.live/api/docs)!
 
-## Important Information
-
-### Roblox Status Live Links:
-- [Roblox Status Live API Docs](https://robloxstatus.live/api/docs)
-
 ## Change Log
 
 #### Roblox Status Live v2 Coming **Very** Soon!
