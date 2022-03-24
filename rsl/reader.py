@@ -1,7 +1,9 @@
 # Copyright 2022 iiPython
 
 # Modules
+from http import server
 import os
+import time
 import json
 from time import sleep
 from typing import Tuple
@@ -15,6 +17,8 @@ class DBLoader(object):
             self.day_db = os.environ.get("_RSL_DAY_DB")
             print("[LOADER] Awaiting for _RSL_DAY_DB environ to be set (2s) ...")
             sleep(2)
+
+        self.service_cache = {}
 
     def gen_date(self) -> str:
         return datetime.utcnow().strftime("%D").replace("/", "-")
@@ -32,7 +36,15 @@ class DBLoader(object):
     def get_current(self) -> list:
         return self.get_date_min(self.gen_date())
 
-    def get_service_data(self, service_id: str) -> Tuple[str, dict, float] | None:
+    def get_service_data(self, service_id: str, cache: bool = True) -> Tuple[str, dict, float]:
+        if cache:
+            if service_id in self.service_cache:
+                if self.service_cache[service_id][0] > time.time():
+                    print(f"[CACHE] Got a hit for service '{service_id}', replied from cache")
+                    return self.service_cache[service_id][1]
+
+                del self.service_cache[service_id]
+
         data = self.get_date_all(self.gen_date())
         name, points, down = None, {}, 0
         for point in data:
@@ -44,7 +56,12 @@ class DBLoader(object):
                     name = service["name"]
                     points[point["time"]] = service["ping"]
 
-        return name, points, round((len(points) - down) / len(points), 2) * 100
+        results = (name, points, round((len(points) - down) / len(points), 2) * 100)
+        if cache:
+            print(f"[CACHE] Got a hit for service '{service_id}', response has been cached")
+            self.service_cache[service_id] = (time.time() + 300, results)
+
+        return results
 
     def guess_status(self, data: list) -> tuple:
         slow = [s for s in data if s["guess"][0] == "slow"]
