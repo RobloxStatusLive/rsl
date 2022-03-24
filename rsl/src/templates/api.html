@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% set title = "Home" %}
+{% block content %}
+    <h3>API Documentation</h3>
+    <div class = "endpoint-container">
+        <div class = "card endpoint">
+            <div class = "card-body">
+                <h5><span class = "badge bg-success">GET</span> <a data-bs-toggle = "collapse" href = "#apiEndpointStatus" role = "button" aria-expanded = "false">/api/status</a></h5>
+                <div class = "collapse" id = "apiEndpointStatus">
+                    <div class = "card card-body">
+                        <p>Shows the latest status data available.<br>Response Schema:</p>
+                        <code><pre>{
+    "services": [
+        {
+            "code": 200,
+            "guess": ["up", "No problems detected"],
+            "id": "auth",
+            "name": "Authentication",
+            "ping": 115.52,
+            "url": "https://auth.roblox.com/"
+        },
+        ...
+    ],
+    "status": ["online", "green"]
+}</pre></code>
+                        
+                        <p><b>Example URL:</b> https://robloxstatus.live/api/status</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class = "card endpoint">
+            <div class = "card-body">
+                <h5><span class = "badge bg-success">GET</span> <a data-bs-toggle = "collapse" href = "#apiEndpointHistorical" role = "button" aria-expanded = "false">/api/historical</a></h5>
+                <div class = "collapse" id = "apiEndpointHistorical">
+                    <div class = "card card-body">
+                        <p>Retrieves the past 24 hours of historical data for a given API.<br>Response Schema:</p>
+                        <code><pre>{
+    "data": {
+        "02:10": 451.34,
+        "02:11": 198.39,
+        "02:12": 186.87,
+        ...
+    },
+    "name": "Authentication",
+    "uptime": 100.0
+}</pre></code>
+                        
+                        <p>
+                            Required parameters:
+                            <ul>
+                                <li><code>id</code> - String - The service's ID</li>
+                            </ul>
+                        </p>
+                        <p><b>Example URL:</b> https://robloxstatus.live/api/historical?id=auth</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jstags %}
+{% endblock %}
