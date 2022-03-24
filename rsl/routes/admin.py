@@ -9,6 +9,9 @@ from flask import session, request, redirect, render_template
 
 # Initialization
 admin_db = os.path.join(os.environ["_RSL_DB"], "admin.json")
+if not os.path.isfile(admin_db):
+    with open(admin_db, "w+") as f:
+        f.write(json.dumps({"users": {}, "message": ""}))
 
 def load_admin_data() -> dict:
     with open(admin_db, "r") as f:
