@@ -26,10 +26,10 @@ def route_api_historical() -> None:
     try:
         service_data = app.db.get_service_data(request.args.get("id"))
         if not service_data:
-            return abort(404)
+            return abort(400)
 
     except Exception:
-        return abort(404)
+        return abort(400)
 
     return jsonify(
         name = service_data[0],

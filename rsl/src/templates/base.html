@@ -48,7 +48,7 @@
             nav {
                 top: 0px;
                 width: 100%;
-                height: 3rem;
+                height: 5rem;
                 position: fixed;
                 background-color: var(--ii-bg2);
             }
@@ -66,7 +66,7 @@
                 text-decoration: underline;
             }
             div#content {
-                margin-top: 75px;
+                margin-top: 100px;
             }
             table {
                 margin: auto;
@@ -83,6 +83,9 @@
             }
             h1.navbar-brand a:hover {
                 text-decoration: none;
+            }
+            h1.navbar-brand {
+                margin-bottom: 0;
             }
 
             /* Media scaling */
@@ -140,17 +143,21 @@
                     <span style = "color: var(--ii-red);">Status</span>
                     <span style = "color: var(--ii-blue);">Live</span>
                 </a></h1>
+                <a href = "/apidocs">API docs</a> ·
+                <a href = "https://github.com/ii-Python/rsl">Github</a> ·
+                <a href = "https://devforum.roblox.com/t/roblox-status-live-the-better-automatic-roblox-down-detector/1567879">Devforum</a>
             </div>
         </nav>
 
         <!-- Content -->
         <div id = "content" align = "center">
+            {% if app.admin_alert %}<div class = "alert alert-warning" role = "alert" style = "width: 800px;">{{ app.admin_alert|safe }}</div>{% endif %}
             {% block content %}{% endblock %}
         </div>
 
         <!-- Footer -->
         <footer>
-            <a href = "https://github.com/ii-Python/rsl">RSL v{{ app.version }}</a> · <a href = "/api/docs">API docs</a> <br>
+            <img src = "/s/favicon.png" style = "max-height: 20px;"> RSL v{{ app.version }}<br>
             Made with ❤️ by <a href = "https://iipython.cf">iiPython</a> + <a href = "https://devforum.roblox.com/u/crcoli737">Crcoli737</a>
         </footer>
 

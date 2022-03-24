@@ -19,6 +19,10 @@ app = Flask(
     template_folder = rpath("src/templates")
 )
 app.version = "1.2"
+app.secret_key = os.environ.get("SECRET", "default")
+
+# Extra data
+app.admin_alert = ""
 
 # Jinja env
 @app.context_processor
@@ -35,4 +39,4 @@ if "RSLSTARTED" not in os.environ:
 app.db = DBLoader()
 
 # Load routes
-from .routes import (public, api)
+from .routes import (public, api, admin)
