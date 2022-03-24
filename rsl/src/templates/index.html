@@ -227,7 +227,7 @@
                         let row = document.createElement("tr");
                         let color = { up: "green", slow: "yellow", down: "red" }[service.guess[0]];
                         $(row).html(`
-                            <th scope = "row" style = "color: var(--ii-${color});" data-rsl-id = "${service.id}}">${service.name}</th>
+                            <th scope = "row" style = "color: var(--ii-${color});" data-rsl-id = "${service.id}">${service.name}</th>
                             <td>${Math.round(service.ping)}ms</td>
                             <td>${service.url.slice(8).split("/")[0]}</td>
                             <td>${service.guess[1]}</td>
