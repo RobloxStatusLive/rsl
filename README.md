@@ -67,8 +67,7 @@ Link: https://robloxstatus.live/api/historical
 - [Roblox Status Live Website](https://robloxstatus.live/)
 - [Roblox Status Live Source Code](https://github.com/ii-Python/rsl)
 - [Roblox Status Live Devforum Thread](https://devforum.roblox.com/t/roblox-status-live-the-better-automatic-roblox-down-detector/1567879)
-- [Roblox Status Live Status API](https://robloxstatus.live/api/status)
-- [Roblox Status Live Historical API](https://robloxstatus.live/api/historical)
+- [Roblox Status Live API Docs](https://robloxstatus.live/api/docs)
 
 ## Change Log
 

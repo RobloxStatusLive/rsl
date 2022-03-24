@@ -1,7 +1,6 @@
 # Copyright 2022 iiPython
 
 # Modules
-from http import server
 import os
 import time
 import json
