@@ -21,10 +21,11 @@ At Roblox Status Live, we are evolving very quickly and plan on using an [Artifi
 ### Summary
 The Roblox Status Live API is an easy way for other developers to integrate the Roblox Status Live data into their own third-party applications.
 
-The link to the API is https://robloxstatus.live/api/status.
+### Status API Contents
 
-### API Contents
-Now let's take a look at what kind of information the API contains. 
+Link: https://robloxstatus.live/api/status
+
+Now let's take a look at what kind of information the Status API contains. 
 
 #### Services Container
 
@@ -51,6 +52,12 @@ Now let's take a look at what kind of information the API contains.
   ]
 ```
 
+### Historical API Contents
+
+Link: https://robloxstatus.live/api/historical
+
+#### Documentation Coming Soon!
+
 #### More API Documentation coming soon!
 
 ## Important Information
@@ -60,11 +67,17 @@ Now let's take a look at what kind of information the API contains.
 - [Roblox Status Live Website](https://robloxstatus.live/)
 - [Roblox Status Live Source Code](https://github.com/ii-Python/rsl)
 - [Roblox Status Live Devforum Thread](https://devforum.roblox.com/t/roblox-status-live-the-better-automatic-roblox-down-detector/1567879)
-- [Roblox Status Live API](https://robloxstatus.live/api/status)
+- [Roblox Status Live Status API](https://robloxstatus.live/api/status)
+- [Roblox Status Live Historical API](https://robloxstatus.live/api/historical)
 
 ## Change Log
 
 #### Roblox Status Live v2 Coming **Very** Soon!
+
+### v1.2 Minor Update
+- Added Historical Roblox Downtime.
+- Added a new Historical API.
+- Added more API details once clicked upon.
 
 ### v1.1 Minor Update
 - Added more Roblox APIs to the API List.
