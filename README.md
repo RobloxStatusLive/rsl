@@ -1,4 +1,5 @@
 # <img style="float: right;" src="https://doy2mn9upadnk.cloudfront.net/uploads/default/original/4X/d/8/a/d8a9a1964099afb7c1778761eef6f915c68c3f19.png"> Official Roblox Status Live v2
+## [Website 💻](https://robloxstatus.live) - [Source Code 🔓](https://github.com/ii-Python/rsl) - [DevForum Thread 📢](https://devforum.roblox.com/t/roblox-status-live-the-better-automatic-roblox-down-detector/1567879) - [API Docs 📕](https://robloxstatus.live/api/docs)
 ### The smarter alternative to the [Roblox Status Page](https://status.roblox.com).
 #### Created with 🧡 by [iiPython](https://iipython.cf) and [Crcoli737](https://devforum.roblox.com/u/crcoli737)
 ###### Logo created by [GamersInternational](https://devforum.roblox.com/u/gamersinternational)
@@ -26,10 +27,6 @@ The Roblox Status Live API is an easy way for other developers to integrate the 
 ## Important Information
 
 ### Roblox Status Live Links:
-- [Roblox Website](https://roblox.com/)
-- [Roblox Status Live Website](https://robloxstatus.live/)
-- [Roblox Status Live Source Code](https://github.com/ii-Python/rsl)
-- [Roblox Status Live Devforum Thread](https://devforum.roblox.com/t/roblox-status-live-the-better-automatic-roblox-down-detector/1567879)
 - [Roblox Status Live API Docs](https://robloxstatus.live/api/docs)
 
 ## Change Log
