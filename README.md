@@ -21,44 +21,7 @@ At Roblox Status Live, we are evolving very quickly and plan on using an [Artifi
 ### Summary
 The Roblox Status Live API is an easy way for other developers to integrate the Roblox Status Live data into their own third-party applications.
 
-### Status API Contents
-
-Link: https://robloxstatus.live/api/status
-
-Now let's take a look at what kind of information the Status API contains. 
-
-#### Services Container
-
-```json
-"services": [ # The services container contains a list of all the Roblox APIs.
-    {
-      "code": 200, # The code element shows the HTTP response code of the specified API.
-      "guess": [ # The guess table shows the predicted status of the specified API.
-        "up", 
-        "No problems detected"
-      ], 
-      "id": "twostepverification", # The id element is simply for identification purposes.
-      "name": "2FA", # The name element is also for identification purposes.
-      "ping": 65.07, # The ping element shows the round-trip ping time (in milliseconds) for the specified API.
-      "url": "https://twostepverification.roblox.com/" # The URL element shows the URL to the specified API.
-    }, 
-```
-
-#### Status Container
-```json
-"status": [ # The status container simply shows the overall status of Roblox based on the status of the APIs.
-    "online", # Status of Roblox
-    "green" # A color representing the status of Roblox.
-  ]
-```
-
-### Historical API Contents
-
-Link: https://robloxstatus.live/api/historical
-
-#### Documentation Coming Soon!
-
-#### More API Documentation coming soon!
+#### The API Documentation has moved [here](http://robloxstatus.live/api/docs)!
 
 ## Important Information
 
