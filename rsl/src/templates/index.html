@@ -22,6 +22,7 @@
                 --ii-bg2: #111214;
                 --ii-gray1: #9e9e9e;
                 --ii-gray2: #4b4b4b;
+                --ii-gray3: #262626;
 
                 /* Individual colors */
                 --ii-red: #de2a2a;
@@ -68,6 +69,28 @@
                 color: #fefefe;
                 position: fixed;
             }
+            th[data-rsl-id] {
+                cursor: pointer;
+            }
+
+            /* Bootstrap custom modal dark theme */
+            .bootbox-close-button {
+                float: right;
+            }
+            .modal-content {
+                background-color: var(--ii-gray3);
+            }
+            .modal-notice {
+                font-size: 12px;
+                margin-top: 20px;
+                margin-bottom: 0px;
+            }
+            .modal-header {
+                border-bottom: 1px solid var(--ii-bg1);
+            }
+            .modal-footer {
+                border-top: 1px solid var(--ii-bg1);
+            }
         </style>
 
         <link rel = "icon" type = "image/png" href = "/s/favicon.png">
@@ -105,7 +128,7 @@
                     {% for service in data %}
                         <tr>
                             {% set color = {"up": "green", "slow": "yellow", "down": "red"}[service["guess"][0]] %}
-                            <th scope = "row" style = "color: var(--ii-{{ color }});">{{ service["name"] }}</th>
+                            <th scope = "row" style = "color: var(--ii-{{ color }});" data-rsl-id = "{{ service['id'] }}">{{ service["name"] }}</th>
                             <td>{{ service["ping"]|round(2)|int }}ms</td>
                             <td>{{ service["url"].removeprefix("https://").split("/")[0] }}</td>
                             <td>{{ service["guess"][1] }}</td>
@@ -120,7 +143,58 @@
 
         <!-- JS -->
         <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+        <script src = "/s/js/bootbox.all.js"></script>
         <script>
+            // Copyright 2022 iiPython
+
+            // Load historical data
+            function handleHistoricalData() {
+                $("th[data-rsl-id]").click((e) => {
+                    let rsl_id = $(e.target).attr("data-rsl-id");
+                    $.get(`/api/historical?id=${rsl_id}`, {}, (d) => {
+                        bootbox.dialog({ 
+                            title: d.name,
+                            message: `
+                            <div><canvas id = "historical-${rsl_id}" height = "300" width = "400"></canvas></div>
+                            <p class = "modal-notice">* Times in 24h UTC | Average uptime: ${d.uptime}%</p>
+                            `,
+                            buttons: {
+                                ok: {
+                                    label: "Close",
+                                    className: "btn-primary",
+                                    callback: () => {}
+                                }
+                            }
+                        });
+
+                        // Populate our graph with its appropriate data
+                        const ctx = document.getElementById(`historical-${rsl_id}`).getContext("2d");
+                        const historyChart = new Chart(ctx, {
+                            type: "line",
+                            data: {
+                                datasets: [{
+                                    label: "Ping",
+                                    data: Object.entries(d.data).map(v => { return { x: v[0], y: v[1] } } ),
+                                    borderColor: "rgb(159, 159, 159)"
+                                }]
+                            },
+                            options: {
+                                responsive: false,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: { title: { display: true, text: "Time" } },
+                                    y: { title: { display: true, text: "Ping" } }
+                                }
+                            }
+                        });
+                    })
+                })
+            }
+            handleHistoricalData();
+
+            // Handle autoreloading
             setInterval(() => {
                 $.get("/api/status", {}, (d) => {
 
@@ -136,13 +210,16 @@
                         let row = document.createElement("tr");
                         let color = { up: "green", slow: "yellow", down: "red" }[service.guess[0]];
                         $(row).html(`
-                            <th scope = "row" style = "color: var(--ii-${color});">${service.name}</th>
+                            <th scope = "row" style = "color: var(--ii-${color});" data-rsl-id = "${service.id}}">${service.name}</th>
                             <td>${Math.round(service.ping)}ms</td>
                             <td>${service.url.slice(8).split("/")[0]}</td>
                             <td>${service.guess[1]}</td>
                         `);
                         $("#service-list").append(row);
                     }
+
+                    // Recalculate historical data
+                    handleHistoricalData();
                 })
             }, 60000);  // 1m since our internal database doesn't update faster than that
         </script>

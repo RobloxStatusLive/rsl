@@ -1,17 +1,26 @@
 # Copyright 2022 iiPython
 
 # Modules
-import json
 from rsl import app
-from flask import jsonify
+from flask import abort, jsonify, request
 
 # Routes
 @app.route("/api/status")
 def route_api_status() -> None:
-    data = json.loads(open("db/current.json", "r").read())
-    slow = [s for n, s in data.items() if s["guess"][0] == "slow"]
-    down = [s for n, s in data.items() if s["guess"][0] == "down"]
+    data = app.db.get_current()
     return jsonify(
-        services =  sorted([d for n, d in data.items()], key = lambda d: d["name"]),
-        status = ("down", "red") if len(down) > 3 else (("partially down", "yellow") if len(slow) > 3 else ("online", "green"))
+        services =  data,
+        status = app.db.guess_status(data)
+    ), 200
+
+@app.route("/api/historical")
+def route_api_historical() -> None:
+    service_data = app.db.get_service_data(request.args.get("id"))
+    if not service_data:
+        return abort(400)
+
+    return jsonify(
+        name = service_data[0],
+        data = service_data[1],
+        uptime = service_data[2]
     ), 200

@@ -2,9 +2,15 @@
 
 # Modules
 import os
+import logging
 from flask import Flask
 
+from .reader import DBLoader
+
 # Initialization
+log = logging.getLogger("werkzeug")  # No need for request logs
+log.setLevel(logging.ERROR)
+
 def rpath(path: str) -> str:
     return os.path.join(os.path.dirname(__file__), path)
 
@@ -12,7 +18,7 @@ app = Flask(
     "Roblox Status Live",
     template_folder = rpath("src/templates")
 )
-app.version = "1.1"
+app.version = "1.2"
 
 # Jinja env
 @app.context_processor
@@ -25,6 +31,8 @@ if "RSLSTARTED" not in os.environ:
 
     from .services import ServiceTracker
     ServiceTracker()
+
+app.db = DBLoader()
 
 # Load routes
 from .routes import (public, api)
