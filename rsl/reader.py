@@ -8,14 +8,17 @@ from time import sleep
 from typing import Tuple
 from datetime import datetime, timedelta
 
+from .logging import log
+
 # Database loader
 class DBLoader(object):
     def __init__(self) -> None:
         self.day_db = os.environ.get("_RSL_DAY_DB")
-        while not self.day_db:
-            self.day_db = os.environ.get("_RSL_DAY_DB")
-            print("[LOADER] Awaiting for _RSL_DAY_DB environ to be set (2s) ...")
-            sleep(2)
+        if not self.day_db:
+            log("reader", "_RSL_DAY_DB env is not set, waiting until it is ...")
+            while not self.day_db:
+                self.day_db = os.environ.get("_RSL_DAY_DB")
+                sleep(.5)
 
         self.service_cache = {}
 
@@ -25,7 +28,7 @@ class DBLoader(object):
     def get_date_all(self, date: str) -> list:
         date_file = os.path.join(self.day_db, f"{date}.json")
         if not os.path.isfile(date_file):
-            print("[LOADER] No data is stored for today! RSL is returning old data ...")
+            log("reader", f"No data stored for {date}, returning previous day ...", "yellow")
             return self.get_date_all((datetime.utcnow() - timedelta(days = 1)).strftime("%D").replace("/", "-"))
 
         with open(date_file, "r") as df:
@@ -43,7 +46,6 @@ class DBLoader(object):
         if cache:
             if service_id in self.service_cache:
                 if self.service_cache[service_id][0] > time.time():
-                    print(f"[CACHE] Got a hit for service '{service_id}', replied from cache")
                     return self.service_cache[service_id][1]
 
                 del self.service_cache[service_id]
@@ -61,7 +63,7 @@ class DBLoader(object):
 
         results = (name, points, round((len(points) - down) / len(points), 2) * 100)
         if cache:
-            print(f"[CACHE] Got a hit for service '{service_id}', response has been cached")
+            log("cache", "Cached service '{service_id}' for 5 minutes")
             self.service_cache[service_id] = (time.time() + 300, results)
 
         return results

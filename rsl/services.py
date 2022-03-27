@@ -8,6 +8,8 @@ from requests import get
 from threading import Thread
 from datetime import datetime
 
+from .logging import log
+
 # Initialization
 os.environ["_RSL_DB"] = os.path.abspath("db")
 os.environ["_RSL_DAY_DB"] = os.path.join(os.environ["_RSL_DB"], "days")
@@ -21,7 +23,7 @@ class TrackerDB(object):
         self.pre_dump = []
 
     def watch(self) -> None:
-        print(f"[TRACKER] Starting watching RAM dump at {datetime.now()} ...")
+        log("tracker", "RSL service tracker started", "green")
         while True:
             if len(self.pre_dump) == self.dump_at:
                 now = datetime.utcnow()
@@ -41,7 +43,7 @@ class TrackerDB(object):
                     df.write(json.dumps(day_data))
 
                 self.pre_dump = []
-                print(f"[TRACKER] RAM dump reached full capacity, dumped to {date}.json at {time}")
+                log("tracker", f"Dumped to {date}.json and flushed RAM cache")
 
             sleep(5)  # No need to rip CPUs, considering our data dump should be wrote every 60s
 
@@ -63,6 +65,8 @@ class ServiceTracker(object):
         Thread(target = self.trackerdb.watch).start()
         for service in self.services:
             Thread(target = self.track, args = [service]).start()
+
+        log("tracker", f"Spawned all {len(self.services)} tracking thread(s)", "green")
 
     def guess_status(self, service: dict, code: int, ping: int) -> str:
         if code != 200:

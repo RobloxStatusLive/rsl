@@ -2,26 +2,24 @@
 
 # Modules
 import os
-import logging
+import sys
 from flask import Flask
 
 from .reader import DBLoader
 
 # Initialization
-log = logging.getLogger("werkzeug")  # No need for request logs
-log.setLevel(logging.ERROR)
-
 def rpath(path: str) -> str:
     return os.path.join(os.path.dirname(__file__), path)
 
+sys.modules["flask.cli"].show_server_banner = lambda *x: None
+
+# Load app
 app = Flask(
     "Roblox Status Live",
     template_folder = rpath("src/templates")
 )
 app.version = "1.2"
 app.secret_key = os.environ.get("SECRET", "default")
-
-# Extra data
 app.admin_alert = ""
 
 # Jinja env
