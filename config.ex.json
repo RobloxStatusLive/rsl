@@ -1,0 +1,6 @@
+{
+    "rsl.secret": "abcdefgh0987654321",
+    "rsl.dataLocation": "./data",
+    "logging.useColor": true,
+    "logging.dumpToFile": true
+}
