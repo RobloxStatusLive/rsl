@@ -9,6 +9,8 @@ from datetime import datetime
 # Initialization
 logging.getLogger("werkzeug").setLevel(logging.ERROR)  # No need for request logs
 log_directory = os.path.join(os.path.dirname(__file__), "../logs")
+if not os.path.isdir(log_directory):
+    os.mkdir(log_directory)  # Create the log directory
 
 # Logging handler
 def pad(text: str) -> None:
