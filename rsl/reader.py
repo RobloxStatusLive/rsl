@@ -6,7 +6,7 @@ import time
 import json
 from time import sleep
 from typing import Tuple
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Database loader
 class DBLoader(object):
@@ -24,6 +24,10 @@ class DBLoader(object):
 
     def get_date_all(self, date: str) -> list:
         date_file = os.path.join(self.day_db, f"{date}.json")
+        if not os.path.isfile(date_file):
+            print("[LOADER] No data is stored for today! RSL is returning old data ...")
+            return self.get_date_all((datetime.utcnow() - timedelta(days = 1)).strftime("%D").replace("/", "-"))
+
         with open(date_file, "r") as df:
             latest = json.loads(df.read())
 
