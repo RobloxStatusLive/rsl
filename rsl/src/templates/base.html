@@ -151,7 +151,6 @@
 
         <!-- Content -->
         <div id = "content" align = "center">
-            {% if app.admin_alert %}<div class = "alert alert-warning" role = "alert" style = "width: 800px;">{{ app.admin_alert|safe }}</div>{% endif %}
             {% block content %}{% endblock %}
         </div>
 
