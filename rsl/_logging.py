@@ -26,7 +26,7 @@ def write(text: str) -> None:
 
 def log(level: str, message: str, pcolor: str = "blue") -> None:
     time = datetime.now().strftime("%m/%d/%Y, %I:%M %p")
-    result = f"[cyan]{pad(time)} | [yellow]{pad(level.upper())} | [{pcolor}]{message}"
+    result = f"[cyan]{pad(time)}[/] [lblack]|[/] [yellow]{pad(level.upper())}[/] [lblack]|[/] [{pcolor}]{message}[/]"
 
     # Handle logging
     print(color(result, dry = not config.get("logging.useColor")))
