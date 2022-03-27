@@ -4,29 +4,23 @@
 import os
 import time
 import json
-from time import sleep
 from typing import Tuple
 from datetime import datetime, timedelta
 
-from .logging import log
+from ._logging import log
+from .config import config
 
 # Database loader
 class DBLoader(object):
     def __init__(self) -> None:
-        self.day_db = os.environ.get("_RSL_DAY_DB")
-        if not self.day_db:
-            log("reader", "_RSL_DAY_DB env is not set, waiting until it is ...")
-            while not self.day_db:
-                self.day_db = os.environ.get("_RSL_DAY_DB")
-                sleep(.5)
-
+        self.historical_folder = os.path.join(config.get("rsl.dataLocation"), "db/days")
         self.service_cache = {}
 
     def gen_date(self) -> str:
         return datetime.utcnow().strftime("%D").replace("/", "-")
 
     def get_date_all(self, date: str) -> list:
-        date_file = os.path.join(self.day_db, f"{date}.json")
+        date_file = os.path.join(self.historical_folder, f"{date}.json")
         if not os.path.isfile(date_file):
             log("reader", f"No data stored for {date}, returning previous day ...", "yellow")
             return self.get_date_all((datetime.utcnow() - timedelta(days = 1)).strftime("%D").replace("/", "-"))

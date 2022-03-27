@@ -8,13 +8,13 @@ from requests import get
 from threading import Thread
 from datetime import datetime
 
-from .logging import log
+from ._logging import log
+from .config import config
 
 # Initialization
-os.environ["_RSL_DB"] = os.path.abspath("db")
-os.environ["_RSL_DAY_DB"] = os.path.join(os.environ["_RSL_DB"], "days")
-if not os.path.isdir(os.environ["_RSL_DAY_DB"]):
-    os.makedirs(os.environ["_RSL_DAY_DB"])
+historical_folder = os.path.join(config.get("rsl.dataLocation"), "db/days")
+if not os.path.isdir(historical_folder):
+    os.makedirs(historical_folder)
 
 # Tracker DB
 class TrackerDB(object):
@@ -30,7 +30,7 @@ class TrackerDB(object):
                 date, time = now.strftime("%D").replace("/", "-"), now.strftime("%H:%M")
 
                 # Save data to our day file
-                day_file = os.path.join(os.environ["_RSL_DAY_DB"], f"{date}.json")
+                day_file = os.path.join(historical_folder, f"{date}.json")
                 if not os.path.isfile(day_file):
                     day_data = []
 
@@ -53,12 +53,8 @@ class TrackerDB(object):
 # Tracking class
 class ServiceTracker(object):
     def __init__(self) -> None:
-        try:
-            with open("config.json", "r") as cfg:
-                self.services = json.loads(cfg.read())["services"]
-
-        except Exception:
-            self.services = []
+        with open(os.path.join(config.get("rsl.dataLocation"), "services.json"), "r") as cfg:
+            self.services = json.loads(cfg.read())
 
         # Start trackers
         self.trackerdb = TrackerDB(len(self.services))

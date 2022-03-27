@@ -5,7 +5,9 @@ import os
 import sys
 from flask import Flask
 
+from .config import config
 from .reader import DBLoader
+from ._logging import log
 
 # Initialization
 def rpath(path: str) -> str:
@@ -18,9 +20,8 @@ app = Flask(
     "Roblox Status Live",
     template_folder = rpath("src/templates")
 )
-app.version = "1.2"
-app.secret_key = os.environ.get("SECRET", "default")
-app.admin_alert = ""
+app.version = "2.0"
+app.secret_key = config.get("rsl.secret")
 
 # Jinja env
 @app.context_processor

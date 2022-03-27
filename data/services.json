@@ -1,0 +1,132 @@
+[
+    {
+        "name": "Authentication",
+        "id": "auth"
+    },
+    {
+        "name": "Devforum",
+        "id": "devforum",
+        "endpoint": "site.json",
+        "threshold": 2000
+    },
+    {
+        "name": "Account Info",
+        "id": "accountinformation"
+    },
+    {
+        "name": "Account Settings",
+        "id": "accountsettings"
+    },
+    {
+        "name": "Ad Service",
+        "id": "ads"
+    },
+    {
+        "name": "Asset Delivery",
+        "id": "assetdelivery"
+    },
+    {
+        "name": "Avatar Service",
+        "id": "avatar"
+    },
+    {
+        "name": "Badge Service",
+        "id": "badges"
+    },
+    {
+        "name": "Billing Service",
+        "id": "billing"
+    },
+    {
+        "name": "Catalog",
+        "id": "catalog"
+    },
+    {
+        "name": "CDN",
+        "id": "cdnproviders"
+    },
+    {
+        "name": "Chat Service",
+        "id": "chat"
+    },
+    {
+        "name": "Develop",
+        "id": "develop"
+    },
+    {
+        "name": "Economy",
+        "id": "economy"
+    },
+    {
+        "name": "Friends Service",
+        "id": "friends"
+    },
+    {
+        "name": "Game Joining",
+        "id": "gamejoin"
+    },
+    {
+        "name": "Games",
+        "id": "games"
+    },
+    {
+        "name": "Groups",
+        "id": "groups"
+    },
+    {
+        "name": "Inventory",
+        "id": "inventory"
+    },
+    {
+        "name": "Localization",
+        "id": "locale"
+    },
+    {
+        "name": "Metrics",
+        "id": "metrics"
+    },
+    {
+        "name": "Notifications",
+        "id": "notifications"
+    },
+    {
+        "name": "Premium",
+        "id": "premiumfeatures"
+    },
+    {
+        "name": "Private Messages",
+        "id": "privatemessages"
+    },
+    {
+        "name": "Game Publishing",
+        "id": "publish"
+    },
+    {
+        "name": "Search",
+        "id": "search"
+    },
+    {
+        "name": "Text Filtering",
+        "id": "textfilter"
+    },
+    {
+        "name": "Thumbnails",
+        "id": "thumbnails"
+    },
+    {
+        "name": "Trading",
+        "id": "trades"
+    },
+    {
+        "name": "2FA",
+        "id": "twostepverification"
+    },
+    {
+        "name": "User Service",
+        "id": "users"
+    },
+    {
+        "name": "Voice Chat",
+        "id": "voice"
+    }
+]

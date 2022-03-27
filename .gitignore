@@ -1,6 +1,9 @@
 # Cache
 __pycache__/
 
-# Hidden files
-db/*
-logs/*
+# Service data
+data/db
+data/logs
+
+# Configuration files
+config.json
