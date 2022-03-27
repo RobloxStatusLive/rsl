@@ -49,6 +49,7 @@
                 top: 0px;
                 width: 100%;
                 height: 5rem;
+                z-index: 999;
                 position: fixed;
                 background-color: var(--ii-bg2);
             }
@@ -66,11 +67,12 @@
                 text-decoration: underline;
             }
             div#content {
-                margin-top: 100px;
-            }
-            table {
-                margin: auto;
-                width: 800px !important;
+                top: 5rem;
+                width: 100%;
+                padding: 20px;
+                position: absolute;
+                overflow-x: hidden;
+                height: calc(100% - 5rem);
             }
             footer {
                 left: 10px;
@@ -78,22 +80,25 @@
                 color: #fefefe;
                 position: fixed;
             }
-            th[data-rsl-id] {
-                cursor: pointer;
-            }
             h1.navbar-brand a:hover {
                 text-decoration: none;
             }
             h1.navbar-brand {
                 margin-bottom: 0;
             }
+            div.row {
+                margin-bottom: 10px;
+                justify-content: center;
+            }
+            div[data-rsl-id] h6 { cursor: pointer; width: fit-content; }
+            div[data-rsl-id] p.card-text { font-size: 14px; }
+            .service-card {
+                background-color: var(--ii-gray3);
+            }
 
             /* Media scaling */
             @media (max-width: 1435px) {
                 footer { display: none; }
-            }
-            @media (max-width: 800px) {
-                table { width: 95% !important; }
             }
 
             /* Bootstrap custom modal dark theme */
@@ -107,6 +112,10 @@
                 font-size: 12px;
                 margin-top: 20px;
                 margin-bottom: 0px;
+            }
+            .modal-notice a {
+                cursor: pointer;
+                color: var(--ii-blue) !important;
             }
             .modal-header {
                 border-bottom: 1px solid var(--ii-bg1);
@@ -150,7 +159,7 @@
         </nav>
 
         <!-- Content -->
-        <div id = "content" align = "center">
+        <div id = "content">
             {% block content %}{% endblock %}
         </div>
 

@@ -10,7 +10,7 @@ def route_index() -> None:
     data = app.db.get_current()
     return render_template(
         "index.html",
-        data = data,
+        data = [data[i:i + 4] for i in range(0, len(data), 4)],
         status = app.db.guess_status(data)
     ), 200
 

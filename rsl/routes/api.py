@@ -23,8 +23,9 @@ def route_api_status() -> None:
 
 @app.route("/api/historical")
 def route_api_historical() -> None:
+    service_id, date = request.args.get("id"), request.args.get("date")
     try:
-        service_data = app.db.get_service_data(request.args.get("id"))
+        service_data = app.db.get_service_data(service_id, **{"date": date} if date else {})
         if not service_data:
             return abort(400)
 

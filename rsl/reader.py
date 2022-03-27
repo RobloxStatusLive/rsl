@@ -36,15 +36,20 @@ class DBLoader(object):
     def get_current(self) -> list:
         return self.get_date_min(self.gen_date())
 
-    def get_service_data(self, service_id: str, cache: bool = True) -> Tuple[str, dict, float]:
+    def get_service_data(self, service_id: str, date: str = None, cache: bool = True) -> Tuple[str, dict, float]:
+        if date is None:
+            date = self.gen_date()
+
         if cache:
-            if service_id in self.service_cache:
-                if self.service_cache[service_id][0] > time.time():
-                    return self.service_cache[service_id][1]
+            if service_id in self.service_cache and date in self.service_cache[service_id]:
+                if self.service_cache[service_id][date][0] > time.time():
+                    return self.service_cache[service_id][date][1]
 
-                del self.service_cache[service_id]
+                del self.service_cache[service_id][date]
+                if not self.service_cache[service_id]:
+                    del self.service_cache[service_id]
 
-        data = self.get_date_all(self.gen_date())
+        data = self.get_date_all(date)
         name, points, down = None, {}, 0
         for point in data:
             for service in point["data"]:
@@ -57,8 +62,11 @@ class DBLoader(object):
 
         results = (name, points, round((len(points) - down) / len(points), 2) * 100)
         if cache:
-            log("cache", "Cached service '{service_id}' for 5 minutes")
-            self.service_cache[service_id] = (time.time() + 300, results)
+            log("cache", f"Cached service '{service_id}' ({date}) for 5 minutes")
+            if service_id not in self.service_cache:
+                self.service_cache[service_id] = {}
+
+            self.service_cache[service_id][date] = (time.time() + 300, results)
 
         return results
 

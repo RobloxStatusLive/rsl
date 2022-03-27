@@ -3,7 +3,7 @@
 # Modules
 import os
 import json
-from time import sleep
+import time
 from requests import get
 from threading import Thread
 from datetime import datetime
@@ -27,7 +27,7 @@ class TrackerDB(object):
         while True:
             if len(self.pre_dump) == self.dump_at:
                 now = datetime.utcnow()
-                date, time = now.strftime("%D").replace("/", "-"), now.strftime("%H:%M")
+                date = now.strftime("%D").replace("/", "-")
 
                 # Save data to our day file
                 day_file = os.path.join(historical_folder, f"{date}.json")
@@ -38,14 +38,14 @@ class TrackerDB(object):
                     with open(day_file, "r") as df:
                         day_data = json.loads(df.read())
 
-                day_data.append({"time": time, "data": self.pre_dump})
+                day_data.append({"time": time.time() * 1000, "data": self.pre_dump})
                 with open(day_file, "w+") as df:
                     df.write(json.dumps(day_data))
 
                 self.pre_dump = []
                 log("tracker", f"Dumped to {date}.json and flushed RAM cache")
 
-            sleep(5)  # No need to rip CPUs, considering our data dump should be wrote every 60s
+            time.sleep(5)  # No need to rip CPUs, considering our data dump should be wrote every 60s
 
     def write(self, data: dict) -> None:
         self.pre_dump.append(data)
@@ -90,4 +90,4 @@ class ServiceTracker(object):
                 code, ping = 0, 0
 
             self.trackerdb.write(service | {"url": service_url, "code": code, "ping": ping, "guess": list(self.guess_status(service, code, ping))})
-            sleep(60)
+            time.sleep(60)
