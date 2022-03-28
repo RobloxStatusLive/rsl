@@ -42,20 +42,18 @@
             // Create the chart
             $.get(`/api/historical?id=${serviceID}&date=${formattedDate}`, {}, (r) => {
                 const ctx = document.getElementById("hscanvas").getContext("2d");
-                if (!historyChart || (historyChart && historyChart.service_id != serviceID)) {
-                    historyChart = new Chart(ctx, {
-                        type: "line",
-                        options: {
-                            responsive: false,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: { title: { display: true, text: "Time" } },
-                                y: { title: { display: true, text: "Ping" } }
-                            }
+                if (historyChart) historyChart.destroy();
+                historyChart = new Chart(ctx, {
+                    type: "line",
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { title: { display: true, text: "Time" } },
+                            y: { title: { display: true, text: "Ping" } }
                         }
-                    });
-                    historyChart.service_id = serviceID;
-                }
+                    }
+                });
                 historyChart.data.datasets = [{
                     label: "Ping",
                     data: Object.entries(r.data).map(v => { return { x: LocaleFormatter.format(v[0]), y: v[1] } } ),
@@ -77,9 +75,10 @@
                 title: $(`div[data-rsl-id='${serviceID}'] h6`).text(),
                 message: `
                 <div><canvas id = "hscanvas" height = "300" width = "400" data-rsl-id = "${serviceID}"></canvas></div>
-                <p class = "modal-notice"><a onclick = "hsRenderDate();">24h</a> · <a onclick = "hsRenderCustomDate();">Custom</a></p>
+                <p class = "modal-notice"><a onclick = "hsRenderDate();">Today</a> · <a onclick = "hsRenderCustomDate();">Custom</a></p>
                 `,
-                buttons: { ok: { label: "Close", className: "btn btn-secondary", callback: () => {} } }
+                buttons: { ok: { label: "Close", className: "btn btn-secondary", callback: () => {} } },
+                onEscape: true
             })
             hsRenderDate();
         })
