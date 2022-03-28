@@ -5,15 +5,15 @@ from rsl import app
 from flask import abort, jsonify, request, redirect, render_template
 
 # Routes
-@app.route("/api")
+@app.route("/api", methods = ["GET"])
 def route_api_doc_redirect() -> None:
     return redirect("/api/docs")
 
-@app.route("/api/docs")
+@app.route("/api/docs", methods = ["GET"])
 def route_api_docs() -> None:
     return render_template("api.html"), 200
 
-@app.route("/api/status")
+@app.route("/api/status", methods = ["GET"])
 def route_api_status() -> None:
     data = app.db.get_current()
     return jsonify(
@@ -21,7 +21,7 @@ def route_api_status() -> None:
         status = app.db.guess_status(data)
     ), 200
 
-@app.route("/api/historical")
+@app.route("/api/historical", methods = ["GET"])
 def route_api_historical() -> None:
     service_id, date = request.args.get("id"), request.args.get("date")
     try:
