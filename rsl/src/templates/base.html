@@ -126,17 +126,25 @@
 
             /* API docs */
             div.endpoint-container {
-                width: 800px;
+                width: 100%;
             }
             div.endpoint {
-                background-color: black;
+                margin-bottom: 20px;
+                background-color: var(--ii-bg2);
             }
-            div.endpoint .card-body h5 {
-                text-align: left;
+            span.badge {
+                margin-right: 5px;
+            } 
+            div.card.card-body {
+                color: var(--ii-fg);
             }
-            span.badge { margin-right: 5px; } 
-            div.card.card-body { text-align: left; color: black; }
-            h5 a:hover { text-decoration: none; }
+            h5 a:hover {
+                text-decoration: none;
+            }
+            .endpoint div div div.card {
+                border: none;
+                background-color: var(--ii-bg2);
+            }
         </style>
 
         <link rel = "icon" type = "image/png" href = "/s/favicon.png">

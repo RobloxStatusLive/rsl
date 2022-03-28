@@ -8,7 +8,7 @@
                 <h5><span class = "badge bg-success">GET</span> <a data-bs-toggle = "collapse" href = "#apiEndpointStatus" role = "button" aria-expanded = "false">/api/status</a></h5>
                 <div class = "collapse" id = "apiEndpointStatus">
                     <div class = "card card-body">
-                        <p>Shows the latest status data available.<br>Response Schema:</p>
+                        <p>Shows the latest status data available for all services.<br>Response Schema:</p>
                         <code><pre>{
     "services": [
         {
@@ -24,7 +24,7 @@
     "status": ["online", "green"]
 }</pre></code>
                         
-                        <p><b>Example URL:</b> https://robloxstatus.live/api/status</p>
+                        <p>Example URL: https://robloxstatus.live/api/status</p>
                     </div>
                 </div>
             </div>
@@ -34,12 +34,15 @@
                 <h5><span class = "badge bg-success">GET</span> <a data-bs-toggle = "collapse" href = "#apiEndpointHistorical" role = "button" aria-expanded = "false">/api/historical</a></h5>
                 <div class = "collapse" id = "apiEndpointHistorical">
                     <div class = "card card-body">
-                        <p>Retrieves the past 24 hours of historical data for a given API.<br>Response Schema:</p>
+                        <p>
+                            Retrieves historical data for a given Roblox service. The returned times are in the form of a UTC timestamp (ms). <br>
+                            Response Schema:
+                        </p>
                         <code><pre>{
     "data": {
-        "02:10": 451.34,
-        "02:11": 198.39,
-        "02:12": 186.87,
+        "1648425607018.1714": 182.25,
+        "1648425667087.197": 181.9,
+        "1648425727158.2974": 178.01,
         ...
     },
     "name": "Authentication",
@@ -47,12 +50,13 @@
 }</pre></code>
                         
                         <p>
-                            Required parameters:
+                            Parameters:
                             <ul>
-                                <li><code>id</code> - String - The service's ID</li>
+                                <li><code>id</code> - String - The service ID *</li>
+                                <li><code>date</code> - String - Change the date of the returned data (mm-dd-yy)</li>
                             </ul>
                         </p>
-                        <p><b>Example URL:</b> https://robloxstatus.live/api/historical?id=auth</p>
+                        <p>Example URL: https://robloxstatus.live/api/historical?id=auth<br>* Indicates a required parameter</p>
                     </div>
                 </div>
             </div>
