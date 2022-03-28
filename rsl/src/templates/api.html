@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 {% set title = "API docs" %}
 {% block content %}
+    <h3>Dataset downloads</h3>
+    <div class = "card dark-card">
+        <div class = "card-body">
+            <div class = "row g-3 align-items-center">
+                <div class = "col-auto">
+                    <input type = "date" class = "form-control" id = "downloadSelect">
+                </div>
+                <div class = "col-auto">
+                    <button class = "btn btn-outline-success" onclick = "downloadSelectedDS();">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h3>API Documentation</h3>
     <div class = "endpoint-container">
-        <div class = "card endpoint">
+        <div class = "card dark-card endpoint">
             <div class = "card-body">
                 <h5><span class = "badge bg-success">GET</span> <a data-bs-toggle = "collapse" href = "#apiEndpointStatus" role = "button" aria-expanded = "false">/api/status</a></h5>
                 <div class = "collapse" id = "apiEndpointStatus">
@@ -29,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class = "card endpoint">
+        <div class = "card dark-card endpoint">
             <div class = "card-body">
                 <h5><span class = "badge bg-success">GET</span> <a data-bs-toggle = "collapse" href = "#apiEndpointHistorical" role = "button" aria-expanded = "false">/api/historical</a></h5>
                 <div class = "collapse" id = "apiEndpointHistorical">
@@ -62,4 +76,13 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block jstags %}
+    <script>
+        const DateTimeFormatter = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", month: "2-digit", day: "2-digit", year: "2-digit" });
+        const formatDate = (date = new Date()) => DateTimeFormatter.format(new Date(date)).replace(/\//g, "-");
+        function downloadSelectedDS() {
+            window.location.href = `/api/download?date=${formatDate($('#downloadSelect').val())}`;
+        }
+    </script>
 {% endblock %}

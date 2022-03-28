@@ -19,9 +19,9 @@ class DBLoader(object):
     def gen_date(self) -> str:
         return datetime.utcnow().strftime("%D").replace("/", "-")
 
-    def get_date_all(self, date: str) -> list:
+    def get_date_all(self, date: str, loopback: bool = True) -> list:
         date_file = os.path.join(self.historical_folder, f"{date}.json")
-        if not os.path.isfile(date_file):
+        if not os.path.isfile(date_file) and loopback:
             log("reader", f"No data stored for {date}, returning previous day ...", "yellow")
             return self.get_date_all((datetime.utcnow() - timedelta(days = 1)).strftime("%D").replace("/", "-"))
 
