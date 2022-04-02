@@ -30,6 +30,7 @@ class Configuration(object):
                 return global_defaults[key] or default
 
             print(f"RSL configuration error: key {key} is missing from config file")
+            print("Make sure that your config file is not named 'config.ex.json' and is named 'config.json'.")
             return os._exit(1)
 
         return self.config[key]
