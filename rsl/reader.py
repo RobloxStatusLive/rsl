@@ -21,9 +21,12 @@ class DBLoader(object):
 
     def get_date_all(self, date: str, loopback: bool = True) -> list:
         date_file = os.path.join(self.historical_folder, f"{date}.json")
-        if not os.path.isfile(date_file) and loopback:
-            log("reader", f"No data stored for {date}, returning previous day ...", "yellow")
-            return self.get_date_all((datetime.utcnow() - timedelta(days = 1)).strftime("%D").replace("/", "-"))
+        if not os.path.isfile(date_file):
+            if loopback:
+                log("reader", f"No data stored for {date}, returning previous day ...", "yellow")
+                return self.get_date_all((datetime.utcnow() - timedelta(days = 1)).strftime("%D").replace("/", "-"), False)
+
+            return []
 
         with open(date_file, "r") as df:
             latest = json.loads(df.read())
